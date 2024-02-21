@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, FlatList, Dimensions, StatusBar, Text, View } from 'react-native';
 import CardIcon from './CardIcon';
-import AppNavigator from './AppNav';
+import BottomNavbar from './AppNav';
 
 interface CardDataItem {
   id: string;
@@ -24,7 +24,7 @@ const ResizablePressableComponent = () => {
     { id: 'C', title: 'Humidity', isOn: true, onIcon: 'air', offIcon: 'ac-unit' },
     { id: 'D', title: 'Security', isOn: true, onIcon: 'security', offIcon: 'security-update-warning' },
     // more items 
-    { id: 'E', title: 'Task Assitant', isOn: true, onIcon: 'cleaning-services', offIcon: 'sensors-off' },
+    { id: 'E', title: 'Task Assistant', isOn: true, onIcon: 'cleaning-services', offIcon: 'sensors-off' },
     { id: 'F', title: 'Other', isOn: true, onIcon: 'add', offIcon: 'add-box' },
   ];
 
@@ -55,31 +55,43 @@ const ResizablePressableComponent = () => {
 
   const cardContainerWidth = (windowWidth - 20 - (numColumns - 1) * 10) / numColumns; // Subtract padding and margin
 
+  // Function to handle bottom navbar item press
+  const handleNavbarPress = (item: string) => {
+    console.log('Bottom Navbar Pressed', item);
+    // You can navigate to different screens based on the item pressed here
+  };
+
+  // Define your bottom navbar items
+  const bottomNavbarItems = ['Home', 'Settings', 'Profile']; // Example items, customize as needed
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar hidden />
-      <View style={styles.welcome}>
-        <Text style={styles.greeting}>Hello User,</Text>
-        <Text style={styles.greetingStmt}>Welcome to Hama, what path would you like to take?</Text>
+      <View style={styles.content}>
+        <View style={styles.welcome}>
+          <Text style={styles.greeting}>Hello User,</Text>
+          <Text style={styles.greetingStmt}>Welcome to Hama, what path would you like to take?</Text>
+        </View>
+        <View>
+          <FlatList
+            data={cardData}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            numColumns={numColumns}
+            contentContainerStyle={styles.listContentContainer}
+          />
+        </View>
       </View>
-      <View>
-      <FlatList
-        data={cardData}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        numColumns={numColumns}
-        contentContainerStyle={styles.listContentContainer}
-      />
-      </View>
-      <View>
-        <AppNavigator />
-      </View>
+      <BottomNavbar navigationItems={bottomNavbarItems} onPress={handleNavbarPress} />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  content: {
     flex: 1,
   },
   listContentContainer: {
@@ -89,7 +101,7 @@ const styles = StyleSheet.create({
   },
   welcome: {
     marginTop: 30,
-    marginHorizontal:10
+    marginHorizontal: 10
   },
   greeting: {
     fontSize: 28,
@@ -99,7 +111,7 @@ const styles = StyleSheet.create({
   },
   greetingStmt: {
     fontSize: 20,
-    fontFamily:'Georgia',
+    fontFamily: 'Georgia',
     letterSpacing: 0.5,
     lineHeight: 24,
   },
