@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Pressable, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-interface Props {
+interface CardProps {
   title: string;
   isOn: boolean;
   onIcon: string; // Icon name for on state
@@ -12,7 +12,7 @@ interface Props {
   containerWidth: number; // Add containerWidth property
 }
 
-const CardIcon = ({ title, isOn, onIcon, offIcon, onPress, style, containerWidth }: Props) => {
+const CardIcon = ({ title, isOn, onIcon, offIcon, onPress, style, containerWidth }: CardProps) => {
   return (
     <Pressable style={[styles.pressableContainer, { width: containerWidth }, style]} onPress={onPress}>
       <View style={styles.iconContainer}>

@@ -6,7 +6,7 @@ interface BottomNavbarProps {
   onPress: (item: string) => void;
 }
 
-const BottomNavbar: React.FC<BottomNavbarProps> = ({ navigationItems, onPress }) => {
+const BottomNavbar = ({ navigationItems, onPress }: BottomNavbarProps) => {
   return (
     <View style={styles.container}>
       {navigationItems.map((item, index) => (
