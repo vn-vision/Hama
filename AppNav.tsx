@@ -1,17 +1,24 @@
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 interface BottomNavbarProps {
-  navigationItems: string[];
-  onPress: (item: string) => void;
+  navigationItems: { label: string, routeName: string }[]; // Update to include route names
 }
 
-const BottomNavbar = ({ navigationItems, onPress }: BottomNavbarProps) => {
+const BottomNavbar = ({ navigationItems }: BottomNavbarProps) => {
+  const navigation: NavigationProp<any> = useNavigation();
+
+  const handleNavbarPress = (routeName: string) => {
+    console.log('Bottom Navbar Pressed', routeName);
+    navigation.navigate(routeName); // Navigate to the specified route
+  };
+
   return (
     <View style={styles.container}>
-      {navigationItems.map((item, index) => (
-        <TouchableOpacity key={index} style={styles.navItem} onPress={() => onPress(item)}>
-          <Text>{item}</Text>
+      {navigationItems.map(({ label, routeName }, index) => (
+        <TouchableOpacity key={index} style={styles.navItem} onPress={() => handleNavbarPress(routeName)}>
+          <Text>{label}</Text>
         </TouchableOpacity>
       ))}
     </View>

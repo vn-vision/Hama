@@ -2,8 +2,17 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CardIcon from "./CardIcon";
+import BottomNavbar from "./AppNav";
 
 const ViewArea = () => {
+    //navbar items stack
+    const bottomNavbarItems = [
+        { label: 'Home', routeName: 'LandP' },
+        { label: 'Display', routeName: 'AppView' },
+        { label: 'Profile', routeName: 'ProfileP' }
+      ]
+    
+      //handle press on cardIcons
     const handlePress = (id: string) => {
         console.log('Pressed', id);
     };
@@ -21,6 +30,7 @@ const ViewArea = () => {
         <View style = {styles.room}>
             <CardIcon title="Kitchen" isOn={true} onIcon='lightbulb' offIcon="" onPress={() => handlePress} containerWidth={24}/>
         </View>
+        <BottomNavbar navigationItems={bottomNavbarItems}/>
     </SafeAreaView>
     );
 };

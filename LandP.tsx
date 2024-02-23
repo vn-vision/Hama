@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, FlatList, Dimensions, StatusBar, Text, View} from 'react-native';
 import CardIcon from './CardIcon';
 import BottomNavbar from './AppNav';
-import { useNavigation, NavigationProp } from "@react-navigation/native"; // Import useNavigation hook
 
+//CardDataItems Interface, specifying the type
 interface CardDataItem {
   id: string;
   title: string;
@@ -14,8 +14,12 @@ interface CardDataItem {
 }
 
 const Welcome = () => {
-  const navigation: NavigationProp<any> = useNavigation(); // Specify type for navigation prop
- 
+  const bottomNavbarItems = [
+    { label: 'Home', routeName: 'LandP' },
+    { label: 'Display', routeName: 'AppView' },
+    { label: 'Profile', routeName: 'ProfileP' }
+  ]
+  // what happens when a cardIcon is pressed
   const handlePress = (id: string) => {
     console.log('Pressed', id);
   };
@@ -34,6 +38,7 @@ const Welcome = () => {
 
   const numColumns = 2;
 
+  // Render the cardItems with their types
   const renderItem = ({ item }: { item: CardDataItem }) => (
     <CardIcon
       title={item.title}
@@ -45,8 +50,8 @@ const Welcome = () => {
     />
   );
 
+  // adjust the display with change in layout
   const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
-
   useEffect(() => {
     const updateLayout = () => {
       setWindowWidth(Dimensions.get('window').width);
@@ -56,23 +61,9 @@ const Welcome = () => {
 
     return () => {};
   }, []);
-
   const cardContainerWidth = (windowWidth - 20 - (numColumns - 1) * 10) / numColumns; // Subtract padding and margin
 
-  // Function to handle bottom navbar item press
-  const handleNavbarPress = (item: string) => {
-    console.log('Bottom Navbar Pressed', item);
-
-    // navigation logic
-    if (item === 'Display')
-    {
-      navigation.navigate('AppView');
-    }
-  };
-
-  // Define your bottom navbar items
-  const bottomNavbarItems = ['Home', 'Display', 'Profile'];
-
+  // The return statement
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar hidden />
@@ -91,7 +82,7 @@ const Welcome = () => {
           />
         </View>
       </View>
-      <BottomNavbar navigationItems={bottomNavbarItems} onPress={handleNavbarPress} />
+      <BottomNavbar navigationItems={bottomNavbarItems} />
     </SafeAreaView>
   );
 };
