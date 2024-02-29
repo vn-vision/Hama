@@ -1,11 +1,12 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, FlatList, Dimensions, StatusBar, Text, View} from 'react-native';
+import { SafeAreaView, FlatList, Dimensions, StatusBar, Text, View} from 'react-native';
 import CardIcon from './CardIcon';
 import BottomNavbar from './AppNav';
+import styles from './styles';
 
 //CardDataItems Interface, specifying the type
-interface CardDataItem {
+export interface CardDataItem {
   id: string;
   title: string;
   isOn: boolean;
@@ -14,18 +15,34 @@ interface CardDataItem {
 }
 
 const Welcome = () => {
+
+    // adjust the display with change in layout for the card Icons
+    const numColumns = 2;
+
+    const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
+    useEffect(() => {
+      const updateLayout = () => {
+        setWindowWidth(Dimensions.get('window').width);
+      };
+  
+      Dimensions.addEventListener('change', updateLayout);
+  
+      return () => {};
+    }, []);
+  
   const bottomNavbarItems = [
     { label: 'Home', routeName: 'LandP' },
     { label: 'Display', routeName: 'AppView' },
     { label: 'Profile', routeName: 'ProfileP' }
   ]
+
   // what happens when a cardIcon is pressed
   const handlePress = (id: string) => {
     console.log('Pressed', id);
   };
 
   // Data array to represent your CardIcons
-  const cardData: CardDataItem[] = [
+  const componentData: CardDataItem[] = [
     { id: 'A', title: 'Lighting', isOn: true, onIcon: 'lightbulb-outline', offIcon: 'lightbulb' },
     { id: 'B', title: 'Temperature', isOn: true, onIcon: 'thermostat', offIcon: 'thermostat-auto' },
     // Add more card details here as needed
@@ -36,7 +53,6 @@ const Welcome = () => {
     { id: 'F', title: 'Other', isOn: true, onIcon: 'add', offIcon: 'add-box' },
   ];
 
-  const numColumns = 2;
 
   // Render the cardItems with their types
   const renderItem = ({ item }: { item: CardDataItem }) => (
@@ -46,22 +62,9 @@ const Welcome = () => {
       onIcon={item.onIcon}
       offIcon={item.offIcon}
       onPress={() => handlePress(item.id)}
-      containerWidth={cardContainerWidth}
     />
   );
 
-  // adjust the display with change in layout
-  const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
-  useEffect(() => {
-    const updateLayout = () => {
-      setWindowWidth(Dimensions.get('window').width);
-    };
-
-    Dimensions.addEventListener('change', updateLayout);
-
-    return () => {};
-  }, []);
-  const cardContainerWidth = (windowWidth - 20 - (numColumns - 1) * 10) / numColumns; // Subtract padding and margin
 
   // The return statement
   return (
@@ -74,7 +77,7 @@ const Welcome = () => {
         </View>
         <View>
           <FlatList
-            data={cardData}
+            data={componentData}
             renderItem={renderItem}
             keyExtractor={item => item.id}
             numColumns={numColumns}
@@ -86,35 +89,5 @@ const Welcome = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  content: {
-    flex: 1,
-  },
-  listContentContainer: {
-    paddingHorizontal: 5,
-    paddingTop: 20,
-    justifyContent: 'space-between',
-  },
-  welcome: {
-    marginTop: 30,
-    marginHorizontal: 10
-  },
-  greeting: {
-    fontSize: 28,
-    fontFamily: 'Georgia',
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  greetingStmt: {
-    fontSize: 20,
-    fontFamily: 'Georgia',
-    letterSpacing: 0.5,
-    lineHeight: 24,
-  },
-});
 
 export default Welcome;

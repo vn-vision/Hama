@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import styles from './styles';
 
 interface BottomNavbarProps {
   navigationItems: { label: string, routeName: string }[]; // Update to include route names
@@ -15,7 +16,7 @@ const BottomNavbar = ({ navigationItems }: BottomNavbarProps) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.nav_container}>
       {navigationItems.map(({ label, routeName }, index) => (
         <TouchableOpacity key={index} style={styles.navItem} onPress={() => handleNavbarPress(routeName)}>
           <Text>{label}</Text>
@@ -25,19 +26,5 @@ const BottomNavbar = ({ navigationItems }: BottomNavbarProps) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    paddingVertical: 10,
-    backgroundColor: '#fff', // Example background color, customize as needed
-    borderTopWidth: 1,
-    borderTopColor: '#ccc',
-  },
-  navItem: {
-    padding: 10,
-  },
-});
 
 export default BottomNavbar;
