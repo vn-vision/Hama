@@ -1,7 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-const RoomStatus = ({ room, onToggle }) => {
+interface Room {
+  id: string,
+  title: string,
+  isOn:boolean,
+}
+interface RoomStatusProps {
+  room: Room,
+  onToggle: (id: string, isOn:boolean) => void;
+}
+interface DbStatusProps {
+  rooms: Room[];
+  onToggleRoomStatus: (id: string, isOn: boolean) => void;
+}
+
+const RoomStatus = ({ room, onToggle }:RoomStatusProps) => {
   const [isOn, setIsOn] = useState(room.isOn);
 
   const toggleStatus = () => {
@@ -21,7 +35,9 @@ const RoomStatus = ({ room, onToggle }) => {
   );
 };
 
-const DbStatus = ({ rooms, onToggleRoomStatus }) => (
+
+
+const DbStatus = ({ rooms, onToggleRoomStatus }:DbStatusProps) => (
   <View style={styles.container}>
     <Text style={styles.heading}>Room Status</Text>
     {rooms.map((room) => (
