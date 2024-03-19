@@ -70,7 +70,7 @@ const ViewArea = () => {
       flex: 1,
     },
     listContentContainer: {
-      justifyContent:'center'
+      justifyContent:'center',
     },
   });
 

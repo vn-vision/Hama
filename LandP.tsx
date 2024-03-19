@@ -1,9 +1,12 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { SafeAreaView, FlatList, Dimensions, StatusBar, Text, View} from 'react-native';
+import { SafeAreaView, FlatList, Dimensions, StatusBar, Text, View, Button,  Alert} from 'react-native';
 import CardIcon from './CardIcon';
 import BottomNavbar from './AppNav';
 import styles from './styles';
+import useBLE from './BLEconnect';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Device } from 'react-native-ble-plx';
 
 //CardDataItems Interface, specifying the type
 export interface CardDataItem {
@@ -15,7 +18,16 @@ export interface CardDataItem {
 }
 
 const Welcome = () => {
+  // request persmissions hook for ble connection
+  const {requestPermission, scanForDevices, allDevices} = useBLE();
 
+  const openModel = async () => {
+    requestPermission((isGranted: boolean)=>{
+      if (isGranted){
+        scanForDevices();
+      }
+    });
+  }
     // adjust the display with change in layout for the card Icons
     const numColumns = 2;
 
@@ -74,8 +86,14 @@ const Welcome = () => {
         <View style={styles.welcome}>
           <Text style={styles.greeting}>Hello User,</Text>
           <Text style={styles.greetingStmt}>Welcome to Hama, what path would you like to take?</Text>
+          <View style={{margin:'auto'}}>
+            <TouchableOpacity onPress={openModel} style={{padding:10}}><Text style={{color:'green'}}>Scan Devices...</Text></TouchableOpacity>
+            {allDevices.map((device: Device)=>(
+              <Text style={{color:'blue'}}>{device.name}</Text>
+            ))}
+          </View>
         </View>
-        <View>
+        <View style={styles.LPElements}>
           <FlatList
             data={componentData}
             renderItem={renderItem}

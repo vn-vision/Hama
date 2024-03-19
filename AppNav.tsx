@@ -19,7 +19,7 @@ const BottomNavbar = ({ navigationItems }: BottomNavbarProps) => {
     <View style={styles.nav_container}>
       {navigationItems.map(({ label, routeName }, index) => (
         <TouchableOpacity key={index} style={styles.navItem} onPress={() => handleNavbarPress(routeName)}>
-          <Text>{label}</Text>
+          <Text style={styles.navItem}>{label}</Text>
         </TouchableOpacity>
       ))}
     </View>

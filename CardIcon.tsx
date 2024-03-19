@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, Pressable, Text } from 'react-native';
+import { View, Pressable, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import styles from './styles';
 
 interface CardProps {
   title: string;
@@ -23,36 +24,5 @@ const CardIcon = ({ title, isOn, onIcon, offIcon, onPress, style, }: CardProps) 
     </Pressable>
   );
 };
-
-const styles = StyleSheet.create({
-  pressableContainer: {
-    backgroundColor: '#fff',
-    padding: 20,
-    margin: '1%',
-    minWidth:'48%',
-    borderRadius: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between', // space between icons and title
-    elevation: 3, // for shadow (Android)
-    shadowColor: '#000', // for shadow (iOS)
-    shadowOffset: { width: 0, height: 2 }, // for shadow (iOS)
-    shadowOpacity: 0.25, // for shadow (iOS)
-    shadowRadius: 3.84, // for shadow (iOS)
-  },
-  iconContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  icon: {
-    marginRight:10,
-  },
-  title: {
-    fontSize: 18,
-  },
-  titleContainer: {
-    flex:2,
-  },
-});
 
 export default CardIcon;

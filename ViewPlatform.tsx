@@ -1,5 +1,6 @@
 import React, { useState, } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { PRI_COLOR, SEC_COLOR, THR_COLOR } from "./styles";
 
 interface Room {
   id: string,
@@ -9,6 +10,7 @@ interface Room {
 interface RoomStatusProps {
   room: Room,
   onToggle: (id: string, isOn:boolean) => void;
+  style: object
 }
 interface DbStatusProps {
   rooms: Room[];
@@ -41,7 +43,7 @@ const DbStatus = ({ rooms, onToggleRoomStatus }:DbStatusProps) => (
   <View style={styles.container}>
     <Text style={styles.heading}>Room Status</Text>
     {rooms.map((room) => (
-      <RoomStatus key={room.id} room={room} onToggle={onToggleRoomStatus} />
+      <RoomStatus key={room.id} room={room} onToggle={onToggleRoomStatus} style={styles.roomTitle}/>
     ))}
   </View>
 );
@@ -49,14 +51,15 @@ const DbStatus = ({ rooms, onToggleRoomStatus }:DbStatusProps) => (
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    margin: 10,
-    backgroundColor: "#f5f5f5",
+    margin: 'auto',
+    backgroundColor: PRI_COLOR,
     borderRadius: 10,
   },
   heading: {
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
+    color: SEC_COLOR,
   },
   roomContainer: {
     flexDirection: "row",
@@ -68,6 +71,7 @@ const styles = StyleSheet.create({
   },
   roomTitle: {
     fontSize: 16,
+    color: THR_COLOR
   },
   statusOn: {
     color: "green",
