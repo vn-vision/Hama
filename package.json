@@ -19,6 +19,7 @@
     "react-native-background-color": "^0.0.8",
     "react-native-ble-manager": "^11.3.2",
     "react-native-ble-plx": "^3.1.2",
+    "react-native-device-info": "^10.13.1",
     "react-native-gesture-handler": "^2.15.0",
     "react-native-permissions": "^4.1.4",
     "react-native-reanimated": "^3.7.1",

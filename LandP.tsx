@@ -20,11 +20,15 @@ export interface CardDataItem {
 const Welcome = () => {
   // request persmissions hook for ble connection
   const {requestPermission, scanForDevices, allDevices} = useBLE();
-
+ 
   const openModel = async () => {
     requestPermission((isGranted: boolean)=>{
       if (isGranted){
+        console.log("Permissions Granted")
         scanForDevices();
+      }
+      else {
+        console.log('Permissions not granted')
       }
     });
   }
